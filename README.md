@@ -64,3 +64,18 @@ Observed string architecture during lab logging: `drwxr-xr-x` vs `-rw-r--r--`
 During packet sniffing on interface **`enp0s3`**, a traffic capture was frozen using the **Stop (Red Square)** control:
 1.  **Hardware Identification:** Successfully isolated the physical interface identity of the testing machine through an ARP broadcast: `PCSSystemtec_c6:ee:...`
 2.  **Traffic Filtering Operations:** Applied the display filter `arp` into the Wireshark filter console. This instantly purged background DHCP broadcast noise, isolating specific Layer 2 validation logs.
+3.  ---
+
+## 🦠 Lab Log 02: Hidden Trojan Script & IoC Extraction
+
+### Why this analysis was conducted:
+In modern enterprise intrusions, attackers often deploy lightweight script components to bypass standard endpoint antivirus definitions. This lab simulates an incident response investigation where a rogue shell script (`backup-scheduler.sh`) disguised as an administrative utility was analyzed.
+
+### Investigation & Extraction Steps:
+1. **Code Audit:** Evaluated the file text using command line utilities to identify data transfer mechanisms (`curl -X POST`). The script was determined to be searching local authentication arrays to silently exfiltrate active user profile names.
+2. **Indicator of Compromise (IoC) Tracking:** Executed a targeted string filter using the `grep` search utility to isolate embedded malicious pathways:
+   * **Command:** `grep "http://" backup-scheduler.sh`
+   * **Extracted Attacker IP:** `193.12.55.84`
+
+### Strategic Defense Implementation:
+To neutralize the active threat component without causing system disruption, an explicit **Outbound Block Rule** was deployed on the network firewall targeting the extracted destination IP (`193.12.55.84`). This ensures data exfiltration loops drop immediately at the boundary perimeter.
