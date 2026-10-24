@@ -79,3 +79,20 @@ In modern enterprise intrusions, attackers often deploy lightweight script compo
 
 ### Strategic Defense Implementation:
 To neutralize the active threat component without causing system disruption, an explicit **Outbound Block Rule** was deployed on the network firewall targeting the extracted destination IP (`193.12.55.84`). This ensures data exfiltration loops drop immediately at the boundary perimeter.
+---
+
+## 📧 Lab Log 03: Digital Forensics & Phishing Header Analysis
+
+### Why this analysis was conducted:
+Phishing via brand impersonation accounts for the vast majority of initial access attempts in corporate infrastructures. This lab simulates an incident response investigation where a corporate user flagged an email claiming to be an official shipping alert from PostNord.
+
+### Forensic Investigation Steps:
+1. **Header Identification:** Extracted the raw headers (`phishing_header.txt`) to audit the electronic routing trail instead of relying on the visible sender profile.
+2. **Authentication Discrepancy:**
+   * **Visible From Line:** `PostNord Sverige <kundservice@postnord.se>`
+   * **Actual Origin Server (Received Header):** `mail.hackerhost.ru (195.22.148.90)`
+3. **The Verdict:** The email is an active phishing spoofing attempt. The transaction records prove the transmission bypassed legitimate distribution networks entirely.
+
+### Incident Remediation Actions:
+* Deployed an immediate **Inbound Block Rule** on the corporate firewall targeting the rogue origin server IP (`195.22.148.90`).
+* Added the sender domain (`postnord-update.se`) to the central mail gateway's absolute untrusted list to filter future variations automatically.
