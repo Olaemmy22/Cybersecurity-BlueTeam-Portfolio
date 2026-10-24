@@ -96,3 +96,9 @@ Phishing via brand impersonation accounts for the vast majority of initial acces
 ### Incident Remediation Actions:
 * Deployed an immediate **Inbound Block Rule** on the corporate firewall targeting the rogue origin server IP (`195.22.148.90`).
 * Added the sender domain (`postnord-update.se`) to the central mail gateway's absolute untrusted list to filter future variations automatically.
+### 🛡️ Live Firewall Mitigation Addendum
+To turn theoretical remediation into practical infrastructure defense, the extracted phishing origin signature was actively blocked using the Linux kernel's native packet filtering architecture:
+* **Deployment Command:** `sudo iptables -A INPUT -s 195.22.148.90 -j DROP`
+* **Verification Command:** `sudo iptables -L -n -v`
+
+**Analysis & Impact:** The `iptables` ruleset database successfully logged the state restriction under the `INPUT` chain, hard-coding a strict drop policy for all packets originating from the hostile host (`195.22.148.90`). This actively shields the local system endpoint from subsequent reconnaissance or exploitation attempts by this actor.
