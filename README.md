@@ -120,3 +120,24 @@ Automated password-guessing (Brute-Force) attacks target open authentication gat
 
 ### Incident Remediation Actions:
 * Leveraged the host security system to isolate the hostile IP footprint (`198.51.100.42`) from initiating future session layer handshakes.
+---
+
+## 🚀 Lab Log 05: Defensive Scripting & Automated Threat Detection
+
+### Why this automation was constructed:
+Security Analysts managing large enterprise infrastructure footprints cannot efficiently audit system event logs manually. This lab simulates the creation of an automated defensive monitoring solution using Bash scripting to detect active brute-force attacks programmatically.
+
+### Engineering & Implementation Steps:
+1. **Script Architecture Layout (`monitor-ssh.sh`):** Configured conditional evaluation blocks to interact with active authentication assets.
+2. **Dynamic Log Extraction:** Programmed a programmatic count variable to extract specific failure metrics automatically:
+   * **Logic Core:** `FAILED_COUNT=$(grep -c "Failed password" auth.log)`
+3. **Automated Alert Threshold:** Established an evaluation limit (`-gt 2`). If anomalous events bypass baseline limitations, a severe security threshold alert flag is automatically tripped.
+4. **Execution Layer Modification:** Bypassed default Linux system restrictions by explicitly updating file flags to an active execution status:
+   * **Command:** `chmod +x monitor-ssh.sh`
+
+### Automated Output Received:
+```text
+=== SECURITY ALERT MONITOR ===
+Total failed login attempts found: 3
+ALERT: Active Brute-Force Attack Detected!
+```
