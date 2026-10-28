@@ -102,3 +102,21 @@ To turn theoretical remediation into practical infrastructure defense, the extra
 * **Verification Command:** `sudo iptables -L -n -v`
 
 **Analysis & Impact:** The `iptables` ruleset database successfully logged the state restriction under the `INPUT` chain, hard-coding a strict drop policy for all packets originating from the hostile host (`195.22.148.90`). This actively shields the local system endpoint from subsequent reconnaissance or exploitation attempts by this actor.
+---
+
+## 📊 Lab Log 04: Server Authentication Audit & Brute-Force Triage
+
+### Why this analysis was conducted:
+Automated password-guessing (Brute-Force) attacks target open authentication gateways continuously. This lab simulates an incident response investigation where server authentication logs (`auth.log`) were triaged to isolate malicious access attempts and verify perimeter health.
+
+### Forensic Investigation Steps:
+1. **Log Ingestion:** Evaluated the native Linux authentication logging array (`/var/log/auth.log`) to parse active session requests.
+2. **Automated Search Filtering:** Executed a case-sensitive string match using the `grep` utility to instantly filter malicious failures from standard background traffic:
+   * **Command:** `grep "Failed password" auth.log`
+3. **Attack Metrics Isolated:**
+   * **Hostile External Source IP:** `198.51.100.42`
+   * **Targeted High-Privilege Profiles:** `admin`, `root`
+   * **Perimeter Verification:** The final record confirmed a legitimate internal connection (`172.16.5.2`) passing validation, proving the brute-force attempt was entirely mitigated.
+
+### Incident Remediation Actions:
+* Leveraged the host security system to isolate the hostile IP footprint (`198.51.100.42`) from initiating future session layer handshakes.
