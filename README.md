@@ -141,3 +141,20 @@ Security Analysts managing large enterprise infrastructure footprints cannot eff
 Total failed login attempts found: 3
 ALERT: Active Brute-Force Attack Detected!
 ```
+---
+
+## 🦈 Lab Log 06: Network Forensics & Deep Packet Inspection via Command Line
+
+### Why this analysis was conducted:
+In advanced enterprise intrusions, malicious actors often delete text-based log files (`auth.log`) to obscure their footprint. This lab simulates the collection and deep-layer inspection of raw network packet streams to capture and isolate unalterable digital forensic evidence.
+
+### Forensic Collection & Extraction Steps:
+1. **Headless Traffic Interception:** Leveraged the command-line packet capturing utility `tcpdump` to hook directly into the system loopback interface, restricting compilation loops to a specific count array to capture raw traffic data:
+   * **Command:** `sudo tcpdump -i lo -c 4 -w network_leak.pcap`
+2. **Protocol Analysis via GUI:** Streamed the binary evidence file (`network_leak.pcap`) directly into Wireshark for multi-layer inspection:
+   * **Command:** `wireshark network_leak.pcap &`
+
+### Captured Forensic Parameters:
+* **Identified Transmission Protocol:** ICMP (Internet Control Message Protocol)
+* **Isolated Traffic Signature:** Sequential Echo Requests and Echo Replies originating and terminating locally (`127.0.0.1`).
+* **Data Payload Inspection:** Audited packet byte structures to decode raw hex values, confirming standard OS variable fills (`!"#$%&'()*+,-./012345`) rather than active administrative exfiltration strings.
