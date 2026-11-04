@@ -158,3 +158,22 @@ In advanced enterprise intrusions, malicious actors often delete text-based log 
 * **Identified Transmission Protocol:** ICMP (Internet Control Message Protocol)
 * **Isolated Traffic Signature:** Sequential Echo Requests and Echo Replies originating and terminating locally (`127.0.0.1`).
 * **Data Payload Inspection:** Audited packet byte structures to decode raw hex values, confirming standard OS variable fills (`!"#$%&'()*+,-./012345`) rather than active administrative exfiltration strings.
+---
+
+## 🦠 Lab Log 07: Basic Static Malware Analysis & Cryptographic Hashing
+
+### Why this analysis was conducted:
+Before detonating a suspicious file in an environment, a Security Analyst must conduct static triage to fingerprint the asset safely without running its code. This lab simulates isolating a suspect file (`invoice_archive.exe`) inside a REMnux analysis platform to extract cryptographic indicators and embedded text strings.
+
+### Static Triage & Identification Steps:
+1. **Cryptographic Fingerprinting:** Generated unique alphanumeric identifiers to serve as a digital fingerprint for global threat hunting telemetry lookup:
+   * **MD5 Hashing Command:** `md5sum invoice_archive.exe`
+   * **MD5 Hash Output:** `f8e492f3f4dbba302a8feb31e7d28894`
+   * **SHA256 Hashing Command:** `sha256sum invoice_archive.exe`
+   * **SHA256 Hash Output:** `79b12cec95c7bf5e3de15475cdfc5c7fdeeb6bb5a1512b4e623a2bfc461e75b7`
+2. **Text Parameter Extraction:** Executed string data mining over the file architecture to expose embedded text components without executing the binary structure:
+   * **Command:** `strings invoice_archive.exe`
+   * **Extracted Text String:** `malware123`
+
+### Strategic Operational Impact:
+Isolating unchangeable cryptographic hashes allows threat intelligence teams to cross-reference signatures against public repositories like VirusTotal instantly. This verifies if the binary matches known malware families globally without risking local host infection.
