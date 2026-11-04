@@ -177,3 +177,23 @@ Before detonating a suspicious file in an environment, a Security Analyst must c
 
 ### Strategic Operational Impact:
 Isolating unchangeable cryptographic hashes allows threat intelligence teams to cross-reference signatures against public repositories like VirusTotal instantly. This verifies if the binary matches known malware families globally without risking local host infection.
+---
+
+## 🦅 Lab Log 08: Enterprise Tooling & SIEM Log Analytics
+
+### Why this analysis was conducted:
+In distributed corporate infrastructures, millions of telemetry records are ingested simultaneously across diverse asset groups. This lab simulates a centralized SIEM (Security Information and Event Management) analytical operation, where raw log components are structured into unified streams to isolate high-severity insider threats programmatically.
+
+### Engineering & Log Structuring Steps:
+1. **Unified Enterprise Log Array Structure (`enterprise_siem.log`):** Formatted complex multi-asset events (Firewalls, Domain Controllers, and Endpoints) into clean, indexable JSON object strings to simulate enterprise parsing formats.
+2. **Automated Search Detection Filtering:** Implemented a targeted text inspection layer to scan incoming endpoints and isolate unauthorized administrative commands across endpoint layers:
+   * **Rule Search Command:** `grep "shadow" enterprise_siem.log`
+
+### SIEM Detection Rule Output Triggered:
+```json
+{"timestamp":"2026-11-04T18:03:50", "asset":"HR-Laptop-Linux", "type":"Endpoint", "status":"SUDO_EXEC", "command":"cat /etc/shadow"}
+```
+
+### Incident Analysis & Remediation Strategy:
+* **The Threat Identified:** High-Severity Credential Dumping attempt (`cat /etc/shadow`) executed via an administrative override block (`SUDO_EXEC`) on a standard workplace node (`HR-Laptop-Linux`).
+* **Containment Action:** Flagged the endpoint system asset instantly for isolation from the corporate subnet. Initiated credentials cancellation protocols and triggered immediate endpoint verification checks to stop lateral movement vectors.
