@@ -197,3 +197,23 @@ In distributed corporate infrastructures, millions of telemetry records are inge
 ### Incident Analysis & Remediation Strategy:
 * **The Threat Identified:** High-Severity Credential Dumping attempt (`cat /etc/shadow`) executed via an administrative override block (`SUDO_EXEC`) on a standard workplace node (`HR-Laptop-Linux`).
 * **Containment Action:** Flagged the endpoint system asset instantly for isolation from the corporate subnet. Initiated credentials cancellation protocols and triggered immediate endpoint verification checks to stop lateral movement vectors.
+---
+
+## 📁 Lab Log 09: Incident Response Triage Playbook & Case Disposition
+
+### Objective:
+To transition tactical regex matching into a comprehensive, operationally mature incident handling lifecycle. This report outlines the formal disposition and mitigation strategy following a high-severity endpoint compromise, structured in alignment with the NIST SP 800-61 standard.
+
+### Full Playbook Execution Logs (`incident_playbook_09.md`):
+* **Target Asset:** HR-Laptop-Linux (Ubuntu 24.04 LTS Endpoint)  
+* **Severity Classification:** CRITICAL (P1)  
+* **Incident Lifecycle ID:** IR-2026-1106-09  
+
+#### 🛑 Detection & Triage Validation:
+1. **The Ingestion Event:** Monitored cross-asset JSON log telemetry streams within a centralized aggregation matrix.
+2. **Contextual Evaluation Matrix:** Cross-referenced active `SUDO_EXEC` privilege escalation requests (`cat /etc/shadow`) against organizational identity management structures and change-management registries.
+3. **Disposition Verdict:** Verified as a **True-Positive Compromise**. The endpoint user profile holds no infrastructure or system administration credentials, yielding zero authorized business justification for password hash access.
+
+#### 🛡️ Active Containment & Defense Workflows:
+* **Network Segregation:** Triggered immediate network isolation rules to drop all connections on the target node, leaving only a monitored security management VLAN active for live packet inspection.
+* **Identity Revocation:** Terminated active session tokens, rotated organizational access privileges, and escalated file telemetry records directly to Tier 2 Incident Response teams for static malware reverse-engineering.
